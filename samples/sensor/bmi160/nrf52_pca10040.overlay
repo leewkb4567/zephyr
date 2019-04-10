@@ -1,0 +1,22 @@
+/*
+ * Copyright (c) 2019 Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+&spi1 {
+	status = "ok";
+	sck-pin = <27>;
+	mosi-pin = <26>;
+	miso-pin = <2>;
+	cs-gpios = <&gpio0 22 0>;
+
+	bmi160@0 {
+		compatible = "bosch,bmi160";
+		reg = <0>;
+		label = "bmi160";
+		spi-max-frequency = <10000000>;
+		int-gpios = <&gpio0 11 0>;
+		status = "ok";
+	};
+};

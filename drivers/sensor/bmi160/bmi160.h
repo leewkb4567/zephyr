@@ -429,6 +429,9 @@ struct bmi160_scale {
 struct bmi160_device_data {
 	struct device *spi;
 	struct spi_config spi_cfg;
+#ifdef DT_BOSCH_BMI160_0_CS_GPIO_CONTROLLER
+	struct spi_cs_control spi_cs;
+#endif
 #if defined(CONFIG_BMI160_TRIGGER)
 	struct device *gpio;
 	struct gpio_callback gpio_cb;

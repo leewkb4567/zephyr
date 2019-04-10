@@ -3,6 +3,6 @@ sample:
 tests:
   test:
     harness: sensor
-    platform_whitelist: arduino_101_sss
+    platform_whitelist: arduino_101_sss nrf52_pca10040
     tags: sensors
     depends_on: spi gpio

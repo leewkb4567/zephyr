@@ -1,6 +1,7 @@
 /* Bosch BMI160 inertial measurement unit driver
  *
  * Copyright (c) 2016 Intel Corporation
+ * Copyright (c) 2019 Nordic Semiconductor ASA
  *
  * SPDX-License-Identifier: Apache-2.0
  *
@@ -806,6 +807,16 @@ int bmi160_init(struct device *dev)
 	bmi160->spi_cfg.operation = SPI_WORD_SET(8);
 	bmi160->spi_cfg.frequency = DT_BOSCH_BMI160_0_SPI_MAX_FREQUENCY;
 	bmi160->spi_cfg.slave = DT_BOSCH_BMI160_0_BASE_ADDRESS;
+
+#ifdef DT_BOSCH_BMI160_0_CS_GPIO_CONTROLLER
+	bmi160->spi_cs.gpio_dev =
+		device_get_binding(DT_BOSCH_BMI160_0_CS_GPIO_CONTROLLER);
+	bmi160->spi_cs.gpio_pin = DT_BOSCH_BMI160_0_CS_GPIO_PIN;
+	bmi160->spi_cs.delay = 0;
+	bmi160->spi_cfg.cs = &(bmi160->spi_cs);
+#else
+	bmi160->spi_cfg.cs = NULL;
+#endif
 
 	/* reboot the chip */
 	if (bmi160_byte_write(dev, BMI160_REG_CMD, BMI160_CMD_SOFT_RESET) < 0) {
