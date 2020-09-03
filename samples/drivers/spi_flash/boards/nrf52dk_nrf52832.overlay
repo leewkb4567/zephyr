@@ -1,0 +1,30 @@
+/*
+ * Copyright (c) 2020 Nordic Semiconductor ASA
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+arduino_i2c: &i2c0 {
+	compatible = "nordic,nrf-twi";
+	status = "disabled";
+	sda-pin = <28>;
+	scl-pin = <29>;
+};
+
+&spi0 {
+	compatible = "nordic,nrf-spi";
+	status = "okay";
+	sck-pin = <27>;
+	mosi-pin = <26>;
+	miso-pin = <2>;
+	cs-gpios = <&gpio0 22 GPIO_ACTIVE_LOW>;
+
+	mx25l6406e: mx25l6406e@0 {
+		compatible = "jedec,spi-nor";
+		label = "MX25L6406E";
+		jedec-id = [c2 20 17];
+		reg = <0>;
+		spi-max-frequency = <80000000>;
+		size = <0x800000>;
+	};
+};
